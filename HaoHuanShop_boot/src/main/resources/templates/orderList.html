@@ -1,0 +1,283 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的订单</title>
+  <link rel="stylesheet" th:href="@{/css/base.css}">
+  <link rel="stylesheet" th:href="@{/css/common.css}">
+  <link rel="stylesheet" th:href="@{/css/orderList.css}">
+  <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon"/>
+  <script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+</head>
+<body>
+<script type="text/javascript" th:if="${null ne key}" th:inline="javascript">
+  var charge = function (){
+    var amount = prompt("请输入充值金额：");
+
+    $.get("/user/charge",{
+      "phoneNo": [[${key.phoneno}]],
+      "password": [[${key.password}]],
+      "balance": [[${key.balance}]],
+      "amount": amount
+    },function (){
+      alert("充值成功");
+      window.location.replace("orders");
+    });
+  }
+</script>
+<script type="text/javascript">
+  $(document).ready(function (){
+    var searchBox = $("#search-box");
+    var hotWord = $("#hot-word");
+    var searchList = $("#search-list");
+    var searchUl = $("#search-list ul");
+
+    searchBox.on("input",function (){
+      searchUl.empty();
+      if(searchBox.val().length <= 0){  //  用户没输入内容
+        hotWord.show();
+        searchList.hide();
+      }else { //  用户输入了内容
+        searchList.css({
+          display: "block"
+        })
+        $.ajax({
+          url:"/search",
+          data:{
+            "word":searchBox.val(),
+          },
+          dataType:"json",
+          success:function (resp){
+            if(resp != null){
+              hotWord.hide();
+              for(var i = 0;i < resp.length; i++){
+                var name = resp[i].name;
+                var url = resp[i].url;
+                var $li = $("<li class='suggest-item'><a href='/goods?url=" + url + "'>" + name + "</a></li>");
+                searchUl.append($li);
+              }
+            }
+          },
+          error:function (){
+            hotWord.show();
+          }
+        })
+        hotWord.hide();
+      }
+    })
+  })
+</script>
+<section class="shortcut">
+  <div class="w">
+    <div class="fl">
+      <ul>
+        <li>好欢购欢迎您！&nbsp;</li>
+        <li>
+          <a th:href="@{/toLogin}" th:if="${null eq session.key}">
+            立即登录
+          </a>
+          <a href="javascript:void(0)" th:if="${null ne session.key}">
+            欢迎您，<span th:text="${session.key.phoneno}"></span>
+          </a>
+          <a th:href="@{/toRegister}" th:if="${null eq session.key}">
+            免费注册
+          </a>
+          <a href="javascript:void(0);" class="style_blueviolet" onclick="charge();" th:if="${null ne session.key}">
+            钱包余额：<span th:text="${session.key.balance}"></span>，充值
+          </a>
+          <a></a>
+          <a th:href="@{/user/logoff}" class="style_red" th:if="${null ne session.key}">
+            退出登录
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="fr">
+      <ul>
+        <li><a th:href="@{/user/orders}">我的订单</a></li>
+        <li></li>
+        <li class="arrow-icon">会员中心</li>
+        <li></li>
+        <li>企业合作</li>
+        <li></li>
+        <li class="arrow-icon">联系我们</li>
+        <li></li>
+        <li class="arrow-icon">售后服务</li>
+        <li></li>
+        <li>合作名单</li>
+        <li></li>
+        <li class="arrow-icon">网站导航</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- 导航栏模块footer -->
+<!-- 头部模块header -->
+<header class="header w">
+  <div class="logo">
+    <h1>
+      <a th:href="@{/index}" title="好欢购商城">好欢购商城</a>
+    </h1>
+  </div>
+  <div class="search">
+    <input type="search" name="" id="search-box" placeholder="输入你心里所想吧！">
+    <button>搜索</button>
+    <div id="search-list" class="suggest-list" style="display: none">
+      <ul>
+      </ul>
+    </div>
+  </div>
+  <div class="hotwords" id="hot-word">
+    <a href="#" class="style_red">好欢购特惠</a>
+    <a href="#">社区优惠</a>
+    <a href="#">9.9包邮</a>
+    <a href="#">聚惠专区</a>
+    <a href="#">笔记本</a>
+    <a th:href="@{/list}">手机</a>
+    <a href="#">数码</a>
+  </div>
+  <div class="shopcar">
+    去购物车结算
+    <i class="count">16</i>
+  </div>
+</header>
+<!-- 头部模块footer -->
+<section class="" style="margin: 0 auto">
+  <div class="title">
+    <h3>我的订单</h3>
+  </div>
+  <div class="contain">
+    <div class="order-item" th:each="order:${orderList}">
+      <div class='order-contain'>
+        <div class='order-head'>
+          <span th:text="${order.time}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单号：0000000000<span th:text="${order.orderId}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;小米官方旗舰店
+        </div>
+        <div class='order-contain'>
+          <div class='order-goods'>
+            <div>
+              <img th:if="${order.goodsId == 1 || order.goodsId == 2}" th:src="@{/upload/list01.png}">
+              <img th:if="${order.goodsId == 3 || order.goodsId == 4}" th:src="@{/upload/list02.png}">
+            </div>
+            <div class='description'>
+              <h3><a th:href="@{'/goods?url='+${order.url}}" th:text="${order.goodsName}"></a></h3>
+            </div>
+            <div class='num'>×1</div>
+          </div>
+          <div class='order-user'>
+            <div class='ico'></div>
+            <div class='user-name'>吴锐宇</div>
+            <div class='user-phone' th:text="${order.phone}"></div>
+          </div>
+          <div class='order-price'>
+            <div>
+              <h3>总额：￥<span th:text="${order.amount}"></span></h3><br>
+              <h3>付款方式:<span th:text="${order.payWay}"></span></h3>
+            </div>
+          </div>
+          <div class='order-situation'>
+            <h3>订单状态：待发货</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- 底部模块header -->
+<footer class="footer">
+  <div class="w">
+    <div class="mod_service">
+      <ul>
+        <li>
+          <h5></h5>
+          <div class="service_txt">
+            <h4>正品保障</h4>
+            <p>正品保障，提供发票</p>
+          </div>
+        </li>
+        <li>
+          <h5></h5>
+          <div class="service_txt">
+            <h4>极速物流</h4>
+            <p>当天发货，快速到家</p>
+          </div>
+        </li>
+        <li>
+          <h5></h5>
+          <div class="service_txt">
+            <h4>全国联保</h4>
+            <p>全国联保，有力保障</p>
+          </div>
+        </li>
+        <li>
+          <h5></h5>
+          <div class="service_txt">
+            <h4>授权认证</h4>
+            <p>授权认证，可溯源头</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="mod_help">
+      <dl>
+        <dt>服务指南</dt>
+        <dd><a href="#">购物流程</a></dd>
+        <dd><a href="#">会员介绍</a></dd>
+        <dd><a href="#">生活旅行</a></dd>
+        <dd><a href="#">常见问题</a></dd>
+        <dd><a href="#">大家电</a></dd>
+        <dd><a href="#">联系客服</a></dd>
+      </dl>
+      <dl>
+        <dt>配送方式</dt>
+        <dd><a href="#">上门自提</a></dd>
+        <dd><a href="#">211限时达</a></dd>
+        <dd><a href="#">配送服务查询</a></dd>
+        <dd><a href="#">配送费收取标准</a></dd>
+        <dd><a href="#">海外配送</a></dd>
+      </dl>
+      <dl>
+        <dt>支付方式</dt>
+        <dd><a href="#">货到付款</a></dd>
+        <dd><a href="#">在线支付</a></dd>
+        <dd><a href="#">分期付款</a></dd>
+        <dd><a href="#">公司转账</a></dd>
+      </dl>
+      <dl>
+        <dt>售后服务</dt>
+        <dd><a href="#">售后政策</a></dd>
+        <dd><a href="#">价格保护</a></dd>
+        <dd><a href="#">退款说明</a></dd>
+        <dd><a href="#">返修/退换货</a></dd>
+        <dd><a href="#">取消订单</a></dd>
+      </dl>
+      <dl>
+        <dt>特色服务</dt>
+        <dd><a href="#">DIY装机</a></dd>
+        <dd><a href="#">延保服务</a></dd>
+        <dd><a href="#">好欢购礼品卡</a></dd>
+        <dd><a href="#">好欢购线下服务</a></dd>
+      </dl>
+      <dl>
+        <dt>帮助中心</dt>
+        <dd>
+          <img src="images/symbol.png" alt="">
+          扫码联系我们
+        </dd>
+      </dl>
+    </div>
+    <div class="mod_copyright">
+      <div class="links">
+        <a href="#">关于我们</a>  |  <a href="#">联系我们</a>  |  <a href="#">联系客服</a>  |  <a href="#">商家入驻</a>  |
+        <a href="#">营销中心</a>  |  <a href="#">手机好欢购</a>  |  <a href="#">友情链接</a>  |   <a href="#">销售联盟</a>  |
+        <a href="#">好欢购社区</a>  |  <a href="#">好欢购公益</a>  |  <a href="#">English Site</a>  |  <a href="#">Contact us</a>
+      </div>
+      <div class="copyright">
+        地址：广东省广州市增城区广州应用科技学院C17-831  电话：17607541208  邮箱：2659901543@qq.com
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- 底部模块footer -->
+</body>
+</html>

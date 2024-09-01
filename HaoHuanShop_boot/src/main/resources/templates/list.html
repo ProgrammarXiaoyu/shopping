@@ -1,0 +1,248 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>好欢购-抢购页</title>
+  <meta name="description" content="好欢购-专业的综合网上购物商城，为您搞定生活的方方面面，尊享品质生活！" />
+  <meta name="keywords" content="在线购物,网上商城，家居，家具，笔记本，手机" />
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/list.css">
+  <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon"/>
+  <script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+</head>
+<body>
+<script type="text/javascript" th:if="${null ne key}" th:inline="javascript">
+  var charge = function (){
+    var amount = prompt("请输入充值金额：");
+
+    $.get("/user/charge",{
+      "phoneNo": [[${key.phoneno}]],
+      "password": [[${key.password}]],
+      "balance": [[${key.balance}]],
+      "amount": amount
+    },function (){
+      alert("充值成功");
+      window.location.replace("list");
+    });
+  }
+</script>
+<!-- 导航栏模块header -->
+<section class="shortcut">
+  <div class="w">
+    <div class="fl">
+      <ul>
+        <li>好欢购欢迎您！&nbsp;</li>
+        <li>
+          <a th:href="@{/toLogin}" th:if="${null eq key}">
+            立即登录
+          </a>
+          <a href="javascript:void(0)" th:if="${null ne key}">
+            欢迎您，<span th:text="${key.phoneno}"></span>
+          </a>
+          <a th:href="@{/toRegister}" th:if="${null eq key}">
+            免费注册
+          </a>
+          <a href="javascript:void(0);" class="style_blueviolet" onclick="charge();" th:if="${null ne key}">
+            钱包余额：<span th:text="${key.balance}"></span>，充值
+          </a>
+          <a></a>
+          <a th:href="@{/user/logoff}" class="style_red" th:if="${null ne key}">
+            退出登录
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="fr">
+      <ul>
+        <li><a th:href="@{/user/orders}">我的订单</a></li>
+        <li></li>
+        <li class="arrow-icon">会员中心</li>
+        <li></li>
+        <li>企业合作</li>
+        <li></li>
+        <li class="arrow-icon">联系我们</li>
+        <li></li>
+        <li class="arrow-icon">售后服务</li>
+        <li></li>
+        <li>合作名单</li>
+        <li></li>
+        <li class="arrow-icon">网站导航</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- 导航栏模块footer -->
+<!-- 头部模块header -->
+<header class="header w">
+  <div class="logo">
+    <h1>
+      <a th:href="@{/index}" title="好欢购商城">好欢购商城</a>
+    </h1>
+  </div>
+  <div class="sk">
+    <img src="images/sk.png" alt="">
+  </div>
+  <div class="search">
+    <input type="search" name="" id="" placeholder="输入你心里所想吧！">
+    <button>搜索</button>
+  </div>
+  <div class="hotwords">
+    <a href="javascript:void(0);" class="style_red">好欢购特惠</a>
+    <a href="javascript:void(0);">社区优惠</a>
+    <a href="javascript:void(0);">9.9包邮</a>
+    <a href="javascript:void(0);">聚惠专区</a>
+    <a href="javascript:void(0);">笔记本</a>
+    <a th:href="@{/list}">手机</a>
+    <a href="javascript:void(0);">数码</a>
+  </div>
+  <div class="shopcar">
+    去购物车结算
+    <i class="count">16</i>
+  </div>
+</header>
+<!-- 头部模块footer -->
+<!-- nav模块header -->
+<nav class="nav">
+  <div class="w">
+    <div class="sk_list">
+      <ul>
+        <li><a href="javascript:void(0);">好欢购秒杀</a></li>
+        <li><a href="javascript:void(0);">限时手机特惠</a></li>
+      </ul>
+    </div>
+    <div class="sk_con">
+      <ul>
+        <li><a href="javascript:void(0);" class="style_red">手机</a></li>
+        <li><a href="javascript:void(0);">平板</a></li>
+        <li><a href="javascript:void(0);">极致性价比</a></li>
+        <li><a href="javascript:void(0);">高端旗舰机</a></li>
+        <li><a href="javascript:void(0);">小米专区</a></li>
+        <li><a href="javascript:void(0);">华为专区</a></li>
+        <li><a href="javascript:void(0);">苹果专区</a></li>
+        <li><a href="javascript:void(0);">更多分类</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- 列表header -->
+<div class="w sk_container">`
+  <div class="sk_hd">
+    <img src="upload/bg_03.png" alt="">
+  </div>
+  <div class="sk_bd">
+    <ul class="clearfix">
+      <li>
+        <a href="/goods?url=detail1">
+          <img src="upload/list01.png" alt="">
+        </a>
+      </li>
+      <li>
+        <a href="/goods?url=detail2">
+          <img src="upload/list02.png" alt="">
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- 列表footer -->
+<!-- nav模块footer -->
+<!-- 底部模块header -->
+<footer class="footer">
+  <div class="w">
+    <div class="mod_service">
+      <ul>
+        <li>
+          <h5></h5>
+          <div class="service_txt">
+            <h4>正品保障</h4>
+            <p>正品保障，提供发票</p>
+          </div>
+        </li>
+        <li>
+          <h5></h5>
+          <div class="service_txt">
+            <h4>极速物流</h4>
+            <p>当天发货，快速到家</p>
+          </div>
+        </li>
+        <li>
+          <h5></h5>
+          <div class="service_txt">
+            <h4>全国联保</h4>
+            <p>全国联保，有力保障</p>
+          </div>
+        </li>
+        <li>
+          <h5></h5>
+          <div class="service_txt">
+            <h4>授权认证</h4>
+            <p>授权认证，可溯源头</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="mod_help">
+      <dl>
+        <dt>服务指南</dt>
+        <dd><a href="#">购物流程</a></dd>
+        <dd><a href="#">会员介绍</a></dd>
+        <dd><a href="#">生活旅行</a></dd>
+        <dd><a href="#">常见问题</a></dd>
+        <dd><a href="#">大家电</a></dd>
+        <dd><a href="#">联系客服</a></dd>
+      </dl>
+      <dl>
+        <dt>配送方式</dt>
+        <dd><a href="#">上门自提</a></dd>
+        <dd><a href="#">211限时达</a></dd>
+        <dd><a href="#">配送服务查询</a></dd>
+        <dd><a href="#">配送费收取标准</a></dd>
+        <dd><a href="#">海外配送</a></dd>
+      </dl>
+      <dl>
+        <dt>支付方式</dt>
+        <dd><a href="#">货到付款</a></dd>
+        <dd><a href="#">在线支付</a></dd>
+        <dd><a href="#">分期付款</a></dd>
+        <dd><a href="#">公司转账</a></dd>
+      </dl>
+      <dl>
+        <dt>售后服务</dt>
+        <dd><a href="#">售后政策</a></dd>
+        <dd><a href="#">价格保护</a></dd>
+        <dd><a href="#">退款说明</a></dd>
+        <dd><a href="#">返修/退换货</a></dd>
+        <dd><a href="#">取消订单</a></dd>
+      </dl>
+      <dl>
+        <dt>特色服务</dt>
+        <dd><a href="#">DIY装机</a></dd>
+        <dd><a href="#">延保服务</a></dd>
+        <dd><a href="#">好欢购礼品卡</a></dd>
+        <dd><a href="#">好欢购线下服务</a></dd>
+      </dl>
+      <dl>
+        <dt>帮助中心</dt>
+        <dd>
+          <img src="images/symbol.png" alt="">
+          扫码联系我们
+        </dd>
+      </dl>
+    </div>
+    <div class="mod_copyright">
+      <div class="links">
+        <a href="#">关于我们</a>  |  <a href="#">联系我们</a>  |  <a href="#">联系客服</a>  |  <a href="#">商家入驻</a>  |
+        <a href="#">营销中心</a>  |  <a href="#">手机好欢购</a>  |  <a href="#">友情链接</a>  |   <a href="#">销售联盟</a>  |
+        <a href="#">好欢购社区</a>  |  <a href="#">好欢购公益</a>  |  <a href="#">English Site</a>  |  <a href="#">Contact us</a>
+      </div>
+      <div class="copyright">
+        地址：广东省广州市增城区广州应用科技学院C17-831  电话：17607541208  邮箱：2659901543@qq.com
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- 底部模块footer -->
+</body>
+</html>

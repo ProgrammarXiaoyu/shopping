@@ -1,0 +1,13 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>购买失败</title>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon"/>
+    <script th:inline="javascript">
+        alert("余额不足，购买失败！");
+        window.location.replace([[${#request.getHeader('Referer')}]]);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

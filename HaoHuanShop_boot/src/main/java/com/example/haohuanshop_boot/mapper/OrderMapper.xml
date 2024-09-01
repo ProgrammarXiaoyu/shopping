@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.haohuanshop_boot.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.example.haohuanshop_boot.entity.Order">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="goodsId" jdbcType="INTEGER" property="goodsid" />
+    <result column="way" jdbcType="VARCHAR" property="way" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, date, userId, goodsId, way
+  </sql>
+  <select id="selectAllOrdersByUserId" resultType="com.example.haohuanshop_boot.model.OrderResult">
+    select o.id as orderId,o.date as time,o.userId as phone,o.goodsId,o.way as payWay,g.name as goodsName,g.price as amount,g.url as url
+    from orders o
+    join goods g
+    on o.goodsId = g.id
+    where userId = #{userId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from orders
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.haohuanshop_boot.entity.Order">
+    insert into orders (id, date, userId, 
+      goodsId, way)
+    values (#{id,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP}, #{userid,jdbcType=VARCHAR}, 
+      #{goodsid,jdbcType=INTEGER}, #{way,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.haohuanshop_boot.entity.Order">
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="goodsid != null">
+        goodsId,
+      </if>
+      <if test="way != null">
+        way,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="way != null">
+        #{way,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

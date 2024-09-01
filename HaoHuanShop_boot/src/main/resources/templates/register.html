@@ -1,0 +1,217 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注册页-好欢购欢迎您！</title>
+  <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon"/>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/register.css">
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript">
+    /**
+     * 判断用户输入的手机号是否正确
+     * @param obj   用户输入的手机号
+     * @returns {boolean}
+     */
+    function checkPhoneNum(obj){
+      if(/^((\d{3}-\d{8}|\d{4}-\d{7,8})|(1[3|5|7|8][0-9]{9}))$/.test(obj)){
+        return true;
+      }
+    }
+
+    $(document).ready(function (){
+      var phone = $("#phonenumber");
+      var phoneFlag = false;
+
+      var password = $("#password");
+      var passwordFlag = false;
+
+      var confirmPwd = $("#confirmPassword");
+      var confirmFlag = false;
+
+      var pointment = $("#pointment");
+
+      var submit = $("#submit");
+
+      phone.on("blur",function (){
+        var tips = $("#phoneTips");
+
+        if(checkPhoneNum(phone.val())){
+          //  手机号格式输入正确
+          tips.empty();
+          tips.append($("<i style='color: green'>手机号码输入正确</i>"));
+          phoneFlag = true;
+        }else {
+          //  手机号格式输入有误
+          tips.empty();
+          tips.append($("<i style='color: red'>手机号码输入有误</i>"));
+          phoneFlag = false;
+        }
+      })
+
+      password.on("blur",function (){
+        var tips = $("#pwdTips");
+
+        if(password.val().length >= 6){
+          tips.empty();
+          tips.append($("<i style='color: green'>密码格式正确</i>"));
+          passwordFlag = true;
+        }else {
+          tips.empty();
+          tips.append($("<i style='color: red'>密码格式有误</i>"));
+          passwordFlag = false;
+        }
+      })
+      password.on("keyup",function (){
+        var icon1 = $(".safe em:nth-child(1)");
+        var icon2 = $(".safe em:nth-child(2)");
+        var icon3 = $(".safe em:nth-child(3)");
+
+        if(password.val().length >= 12){
+          icon1.css({
+            backgroundColor: "transparent"
+          })
+          icon2.css({
+            backgroundColor: "transparent"
+          })
+          icon3.css({
+            backgroundColor: "#f79100"
+          })
+        }else if(password.val().length >= 9){
+          icon1.css({
+            backgroundColor: "transparent"
+          })
+          icon3.css({
+            backgroundColor: "transparent"
+          })
+          icon2.css({
+            backgroundColor: "#40b83f"
+          })
+        }else if(password.val().length >= 6){
+          icon2.css({
+            backgroundColor: "transparent"
+          })
+          icon3.css({
+            backgroundColor: "transparent"
+          })
+          icon1.css({
+            backgroundColor: "#de1111"
+          })
+        }else {
+          icon1.css({
+            backgroundColor: "transparent"
+          })
+        }
+      })
+
+      confirmPwd.on("blur",function (){
+        var tips = $("#confirmTips");
+
+        if(password.val() == confirmPwd.val()){
+          tips.empty();
+          tips.append($("<i style='color: green'>两次输入一致</i>"));
+          confirmFlag = true;
+        }else {
+          tips.empty();
+          tips.append($("<i style='color: red'>两次输入不一致</i>"));
+          confirmFlag = false;
+        }
+      })
+
+      $('#registerForm').submit(function(e) {
+        e.preventDefault();
+      });
+
+      submit.on("click",function (){
+        if(!phoneFlag){
+          alert("手机号未按要求填写！");
+          return false;
+        }
+        if(!passwordFlag || !confirmFlag){
+          alert("密码未按要求填写！");
+          return false;
+        }
+        if(!pointment.prop('checked')){
+          alert("用户协议未勾选！");
+          return false;
+        }
+
+        $.ajax({
+          url:"/register",
+          data:{
+            "phoneNo":phone.val(),
+            "password":password.val(),
+          },
+          dataType:"text",
+          success:function (resp){
+            alert(resp);
+
+            if (resp == $.trim("注册成功，跳转到登录页！")){
+              window.location.replace("toLogin");
+            }else {
+              window.location.replace("toRegister");
+            }
+          },
+          type:"post"
+        })
+      });
+    })
+  </script>
+</head>
+<body>
+<div class="w">
+  <header>
+    <div class="logo">
+      <h1>
+        <a th:href="@{/index}" title="好欢购商城">好欢购商城</a>
+      </h1>
+    </div>
+  </header>
+  <div class="registerarea">
+    <h3>
+      注册新用户
+      <div class="login">
+        我已有账号，去<a href="/toLogin">登录</a>
+      </div>
+    </h3>
+    <div class="reg_form">
+      <form id="registerForm">
+        <ul>
+          <li><label for="phonenumber">手机号：</label><input type="text" class="input" name="phoneNo" id="phonenumber" placeholder="请输入11位手机号">
+            <span id="phoneTips"></span>
+          </li>
+          <li><label for="password">登录密码：</label><input type="password" class="input" name="password" id="password" placeholder="请输入6位以上的密码">
+            <span id="pwdTips"></span>
+          <li class="safe">
+            安全程度 <em>弱</em> <em>中</em> <em>强</em>
+          </li>
+          <li><label for="confirmpassword">确认密码：</label><input type="password" class="input" id="confirmPassword">
+            <span id="confirmTips"></span>
+          </li>
+          <li class="agree">
+            <input type="checkbox" id="pointment">同意协议并注册 <a href="#">《知晓用户协议》</a>
+          </li>
+          <li>
+            <button class="button" id="submit">完成注册</button>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </div>
+  <footer>
+    <div class="mod_copyright">
+      <div class="links">
+        <a href="#">关于我们</a>  |  <a href="#">联系我们</a>  |  <a href="#">联系客服</a>  |  <a href="#">商家入驻</a>  |
+        <a href="#">营销中心</a>  |  <a href="#">手机好欢购</a>  |  <a href="#">友情链接</a>  |   <a href="#">销售联盟</a>  |
+        <a href="#">好欢购社区</a>  |  <a href="#">好欢购公益</a>  |  <a href="#">English Site</a>  |  <a href="#">Contact us</a>
+      </div>
+      <div class="copyright">
+        地址：广东省广州市增城区广州应用科技学院C17-831  电话：17607541208  邮箱：2659901543@qq.com
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

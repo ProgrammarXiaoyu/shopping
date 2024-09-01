@@ -1,0 +1,106 @@
+.suggest-list {
+    z-index: 99;
+}
+.suggest-item {
+    width: 454px;
+    font-size: 14px;
+    background-color: white;
+}
+
+.title {
+    margin-left: 13%;
+    margin-bottom: 20px;
+    padding-left: 70px;
+    width: 1364px;
+    height: 72px;
+    font-size: 16px;
+    background-color: rgba(245, 245, 245);
+    line-height: 72px;
+}
+
+.contain {
+    margin-left: 12%;
+    padding-left: 40px;
+    width: 1468px;
+    height: 600px;
+}
+
+.order-item {
+    border: .5px solid;
+    width: 1342px;
+    margin-bottom: 20px;
+    height: 154px;
+}
+
+.order-head {
+    height: 36px;
+    line-height: 36px;
+    padding-left: 40px;
+    background-color: rgb(245, 245, 245);
+}
+
+.order-goods {
+    border-right: 1px solid ;
+    padding-top: 10px;
+    padding-left: 30px;
+    float: left;
+    width: 824px;
+    height: 118px;
+}
+.order-goods div {
+    float: left;
+    margin-right: 20px;
+}
+.order-goods img {
+    width: 110px;
+    height: 95px;
+}
+.description {
+    margin-top: 20px;
+}
+.num {
+    margin-top: 23px;
+    margin-left: 70px;
+}
+
+.order-user {
+    border-right: 1px solid;
+    padding-top: 20px;
+    padding-left: 20px;
+    float: left;
+    width: 175px;
+    height: 118px;
+}
+.ico {
+    margin-left: 65px;
+    font-family: icomoon;
+    font-size: 16px;
+}
+.user-name {
+    margin-top: 5px;
+    margin-left: 55px;
+}
+.user-phone {
+    margin-top: 5px;
+    margin-left: 35px;
+}
+
+.order-price {
+    padding-top: 40px;
+    border-right: 1px solid;
+    float: left;
+    width: 175px;
+    height: 118px;
+    text-align: center;
+}
+.order-price h3{
+    display: inline;
+}
+
+.order-situation {
+    float: left;
+    width: 160px;
+    height: 118px;
+    line-height: 118px;
+    text-align: center;
+}

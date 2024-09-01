@@ -1,0 +1,323 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【小米11】小米11 5G 骁龙888 2K AMOLED四曲面柔性屏 - 好欢购</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/detail.css">
+  <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon"/>
+  <script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+</head>
+<body>
+<script type="text/javascript" th:if="${null ne key}" th:inline="javascript">
+  var charge = function (){
+    var amount = prompt("请输入充值金额：");
+
+    $.get("/user/charge",{
+      "phoneNo": [[${key.phoneno}]],
+      "password": [[${key.password}]],
+      "balance": [[${key.balance}]],
+      "amount": amount
+    },function (){
+      alert("充值成功");
+      window.location.replace("index");
+    });
+  }
+</script>
+<!-- 导航栏模块header -->
+<section class="shortcut">
+  <div class="w">
+    <div class="fl">
+      <ul>
+        <li>好欢购欢迎您！&nbsp;</li>
+        <li>
+          <a th:href="@{/toLogin}" th:if="${null eq session.key}" methods="post">
+            立即登录
+          </a>
+          <a href="javascript:void(0)" th:if="${null ne session.key}" methods="post">
+            欢迎您，<span th:text="${session.key.phoneno}"></span>
+          </a>
+          <a th:href="@{/toRegister}" th:if="${null eq session.key}">
+            免费注册
+          </a>
+          <a href="javascript:void(0);" class="style_blueviolet" onclick="charge();" th:if="${null ne session.key}">
+            钱包余额：<span th:text="${session.key.balance}"></span>，充值
+          </a>
+          <a></a>
+          <a th:href="@{/user/logoff}" class="style_red" th:if="${null ne session.key}">
+            退出登录
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="fr">
+      <ul>
+        <li><a th:href="@{/user/orders}">我的订单</a></li>
+        <li></li>
+        <li class="arrow-icon">会员中心</li>
+        <li></li>
+        <li>企业合作</li>
+        <li></li>
+        <li class="arrow-icon">联系我们</li>
+        <li></li>
+        <li class="arrow-icon">售后服务</li>
+        <li></li>
+        <li>合作名单</li>
+        <li></li>
+        <li class="arrow-icon">网站导航</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- 导航栏模块footer -->
+<!-- 头部模块header -->
+<header class="header w">
+  <div class="logo">
+    <h1>
+      <a th:href="@{/index}" title="好欢购商城">好欢购商城</a>
+    </h1>
+  </div>
+  <div class="search">
+    <input type="search" name="" id="" placeholder="输入你心里所想吧！">
+    <button>搜索</button>
+  </div>
+  <div class="hotwords">
+    <a href="#" class="style_red">好欢购特惠</a>
+    <a href="#">社区优惠</a>
+    <a href="#">9.9包邮</a>
+    <a href="#">聚惠专区</a>
+    <a href="#">笔记本</a>
+    <a th:href="@{/list}">手机</a>
+    <a href="#">数码</a>
+  </div>
+  <div class="shopcar">
+    去购物车结算
+    <i class="count">16</i>
+  </div>
+</header>
+<!-- 头部模块footer -->
+<!-- nav模块header -->
+<nav class="nav">
+  <div class="w">
+    <div class="dropdown">
+      <div class="dt">全部商品分类</div>
+    </div>
+    <div class="navitems">
+      <ul>
+        <li><a href="#">电脑城</a></li>
+        <li><a href="#">数码城</a></li>
+        <li><a href="#">美妆馆</a></li>
+        <li><a href="#">儿童天地</a></li>
+        <li><a href="#">本地俱乐部</a></li>
+        <li><a href="#">服装城</a></li>
+        <li><a href="#">二手交易</a></li>
+        <li><a href="#">生鲜超市</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- nav模块footer -->
+<!-- 商品详情模块header -->
+<div class="main w">
+  <div class="information">
+    <div class="left">
+      <h3><a th:href="@{/list}">手机、数码、智能通信</a>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;<a href="list.jsp">手机</a>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;<a href="list.jsp">小米（MI）</a>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;<a href="#">小米 11</a></h3>
+      <div class="videobox">
+        <video width="450px" src="videos/mi11.mp4" autoplay="autoplay" muted="muted" controls="controls" loop="loop"></video>
+      </div>
+      <ul>
+        <li></li>
+        <li><img src="upload/mi11-01.jpg" alt=""></li>
+        <li><img src="upload/mi11-02.jpg" alt=""></li>
+        <li><img src="upload/mi11-03.jpg" alt=""></li>
+        <li><img src="upload/mi11-04.jpg" alt=""></li>
+        <li><img src="upload/mi11-05.jpg" alt=""></li>
+        <li></li>
+      </ul>
+      <p class="description">商品编号：0000000001</p>
+    </div>
+    <div class="right">
+      <h3>小米11 5G 骁龙888 2K AMOLED四曲面柔性屏 1亿像素 55W有线闪充 50W无线闪充 游戏手机</h3>
+      <p>【小米11领劵优惠200，到手价3799】5.24-6.20全程价保。【小米11ultra预售优惠700戳】<a href="3">查看</a></p>
+      <div class="price">
+        <ul>
+          <li>
+            价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格 <h1>￥5299.00</h1>
+          </li>
+          <li>
+            促&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销
+            <div>
+              加价购
+            </div>
+            满999另加20.00元，满1999另加30.00元，满2999另加40.00元，换购热销商品，更有机会赢大礼回家！
+          </li>
+          <li>
+            支&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;持
+            <h5>以旧换新，闲置手机回收 &nbsp;&nbsp;&nbsp;5G套装超值抢</h5>
+          </li>
+          <li>
+            配&nbsp;送&nbsp;至
+            <h5>
+              广东广州市增城区&nbsp;有货&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由好欢购自营，并提供售后服务。19：00前下单，明天可送达！
+            </h5>
+          </li>
+        </ul>
+      </div>
+      <form th:action="@{/purchase}" method="get">
+        <div class="data">
+          <ul>
+            <li>
+              选择颜色&nbsp;&nbsp;
+              <input type="radio" name="goodsId" value="1">白色&nbsp;&nbsp;
+              <input type="radio" name="goodsId" value="2">黑色&nbsp;&nbsp;
+            </li>
+            <li>
+              支付方式&nbsp;&nbsp;
+              <input type="radio" name="way" value="在线支付">在线支付&nbsp;&nbsp;
+            </li>
+          </ul>
+        </div>
+        <input type="hidden" value="5299" name="price">
+        <input type="submit" value="立即购买" class="purchase">
+      </form>
+    </div>
+  </div>
+  <div class="show">
+    <div class="introduction">
+      <div class="exhibit">
+        <ul>
+          <li>商品介绍</li>
+          <li>规格与包装</li>
+          <li>售后保障</li>
+          <li>手机社区</li>
+        </ul>
+      </div>
+      <div class="words">
+        <ul>
+          <li>商品名称：小米 11</li>
+          <li>商品编号：0000000001</li>
+          <li>商品毛重：370.00g</li>
+          <li>商品产地：中国大陆CPU</li>
+          <li>处理器型号：骁龙888</li>
+          <li>主屏幕尺寸（英寸）：6.81英寸</li>
+          <li>摄像头数量：后置三摄</li>
+          <li>分辨率：QHD+及以上</li>
+          <li>屏幕比例：19.6~20:9屏幕</li>
+          <li>前摄组合：开孔屏</li>
+          <li>支持IPv6：支持IPv6</li>
+        </ul>
+      </div>
+    </div>
+    <img src="upload/midetail-01.png" alt="">
+    <img src="upload/midetail-02.png" alt="">
+    <img src="upload/midetail-03.png" alt="">
+    <img src="upload/midetail-04.png" alt="">
+    <img src="upload/midetail-05.png" alt="">
+    <img src="upload/midetail-06.png" alt="">
+    <img src="upload/midetail-07.png" alt="">
+    <img src="upload/midetail-08.png" alt="">
+    <img src="upload/midetail-09.png" alt="">
+    <img src="upload/midetail-10.png" alt="">
+  </div>
+</div>
+<!-- 商品详情模块footer -->
+<!-- 底部模块header -->
+<footer class="footer">
+  <div class="w">
+    <div class="mod_service">
+      <ul>
+        <li>
+          <h5></h5>
+          <div class="service_txt">
+            <h4>正品保障</h4>
+            <p>正品保障，提供发票</p>
+          </div>
+        </li>
+        <li>
+          <h5></h5>
+          <div class="service_txt">
+            <h4>极速物流</h4>
+            <p>当天发货，快速到家</p>
+          </div>
+        </li>
+        <li>
+          <h5></h5>
+          <div class="service_txt">
+            <h4>全国联保</h4>
+            <p>全国联保，有力保障</p>
+          </div>
+        </li>
+        <li>
+          <h5></h5>
+          <div class="service_txt">
+            <h4>授权认证</h4>
+            <p>授权认证，可溯源头</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="mod_help">
+      <dl>
+        <dt>服务指南</dt>
+        <dd><a href="#">购物流程</a></dd>
+        <dd><a href="#">会员介绍</a></dd>
+        <dd><a href="#">生活旅行</a></dd>
+        <dd><a href="#">常见问题</a></dd>
+        <dd><a href="#">大家电</a></dd>
+        <dd><a href="#">联系客服</a></dd>
+      </dl>
+      <dl>
+        <dt>配送方式</dt>
+        <dd><a href="#">上门自提</a></dd>
+        <dd><a href="#">211限时达</a></dd>
+        <dd><a href="#">配送服务查询</a></dd>
+        <dd><a href="#">配送费收取标准</a></dd>
+        <dd><a href="#">海外配送</a></dd>
+      </dl>
+      <dl>
+        <dt>支付方式</dt>
+        <dd><a href="#">货到付款</a></dd>
+        <dd><a href="#">在线支付</a></dd>
+        <dd><a href="#">分期付款</a></dd>
+        <dd><a href="#">公司转账</a></dd>
+      </dl>
+      <dl>
+        <dt>售后服务</dt>
+        <dd><a href="#">售后政策</a></dd>
+        <dd><a href="#">价格保护</a></dd>
+        <dd><a href="#">退款说明</a></dd>
+        <dd><a href="#">返修/退换货</a></dd>
+        <dd><a href="#">取消订单</a></dd>
+      </dl>
+      <dl>
+        <dt>特色服务</dt>
+        <dd><a href="#">DIY装机</a></dd>
+        <dd><a href="#">延保服务</a></dd>
+        <dd><a href="#">好欢购礼品卡</a></dd>
+        <dd><a href="#">好欢购线下服务</a></dd>
+      </dl>
+      <dl>
+        <dt>帮助中心</dt>
+        <dd>
+          <img src="images/symbol.png" alt="">
+          扫码联系我们
+        </dd>
+      </dl>
+    </div>
+    <div class="mod_copyright">
+      <div class="links">
+        <a href="#">关于我们</a>  |  <a href="#">联系我们</a>  |  <a href="#">联系客服</a>  |  <a href="#">商家入驻</a>  |
+        <a href="#">营销中心</a>  |  <a href="#">手机好欢购</a>  |  <a href="#">友情链接</a>  |   <a href="#">销售联盟</a>  |
+        <a href="#">好欢购社区</a>  |  <a href="#">好欢购公益</a>  |  <a href="#">English Site</a>  |  <a href="#">Contact us</a>
+      </div>
+      <div class="copyright">
+        地址：广东省广州市增城区广州应用科技学院C17-831  电话：17607541208  邮箱：2659901543@qq.com
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- 底部模块footer -->
+</body>
+</html>
